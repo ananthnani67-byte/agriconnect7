@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriConnect - Smart Farming Support</title>
+
+    <!-- Google Fonts: Outfit (Modern) and Inter (Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- RemixIcon for Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <i class="ri-leaf-fill"></i> AgriConnect
+        </div>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#hybrid">Our Fleet</a>
+            <button class="nav-btn" id="nav-book-btn">Book Machine</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-bg">
+            <div class="overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="badge">
+                <i class="ri-tractor-line"></i> Smart Agricultural Support
+            </div>
+            <h1>Transforming Traditional Farming into a <span class="gradient-text">Smart Ecosystem</span></h1>
+            <p>Timely access to tractors and harvesters. GPS tracking, weather alerts, and group booking to prevent crop
+                loss and maximize yield.</p>
+
+            <div class="hero-actions">
+                <button class="btn-primary pulsate" id="hero-book-btn">
+                    <i class="ri-calendar-check-line"></i> Book Machine Now
+                </button>
+                <div class="toll-free">
+                    <span>Or call Toll-Free:</span>
+                    <strong>1800-AGRI-HELP</strong>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">Why Choose AgriConnect?</h2>
+        <div class="features-grid">
+
+            <div class="feature-card glass-panel">
+                <div class="icon-wrapper bg-green">
+                    <i class="ri-map-pin-user-line"></i>
+                </div>
+                <h3>GPS Tracking</h3>
+                <p>Track your assigned machine in real-time, knowing exactly when it will arrive at your farm.</p>
+            </div>
+
+            <div class="feature-card glass-panel">
+                <div class="icon-wrapper bg-blue">
+                    <i class="ri-cloud-windy-line"></i>
+                </div>
+                <h3>Weather Alerts</h3>
+                <p>Get instant weather forecasts to plan your harvesting before unexpected rain causes crop loss.</p>
+            </div>
+
+            <div class="feature-card glass-panel">
+                <div class="icon-wrapper bg-orange">
+                    <i class="ri-team-line"></i>
+                </div>
+                <h3>Group Booking</h3>
+                <p>Collaborate with neighboring farmers to book machines together, saving time and transportation costs.
+                </p>
+            </div>
+
+            <div class="feature-card glass-panel">
+                <div class="icon-wrapper bg-purple">
+                    <i class="ri-wheelchair-line"></i>
+                </div>
+                <h3>Job Creation</h3>
+                <p>Empowering rural communities by providing steady jobs for local drivers and technicians.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Hybrid Fleet Section -->
+    <section id="hybrid" class="hybrid-section">
+        <div class="hybrid-container glass-panel">
+            <div class="hybrid-text">
+                <h2>The Hybrid Fleet Model</h2>
+                <p>We combine high-quality company-owned machines with external machines from local owners. This ensures
+                    maximum availability during peak seasons and better utilization of community resources.</p>
+                <ul class="fleet-list">
+                    <li><i class="ri-checkbox-circle-fill"></i> Company-Owned Harvesters</li>
+                    <li><i class="ri-checkbox-circle-fill"></i> Local Owner Tractors</li>
+                    <li><i class="ri-checkbox-circle-fill"></i> Certified Technicians</li>
+                </ul>
+            </div>
+            <div class="hybrid-image">
+                <img src="https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=800&auto=format&fit=crop"
+                    alt="Tractor in field" class="rounded-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="logo"><i class="ri-leaf-fill"></i> AgriConnect</div>
+            <p>“Our solution aims to transform traditional farming into a smart, efficient, and technology-driven system
+                that benefits both farmers and rural communities.”</p>
+            <p class="copyright">&copy; 2026 AgriConnect. Expanding from Mandal to State level.</p>
+        </div>
+    </footer>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content glass-form">
+            <div class="modal-header">
+                <h3>Book a Machine</h3>
+                <button class="close-btn" id="close-modal"><i class="ri-close-line"></i></button>
+            </div>
+            <form id="booking-form">
+                <div class="form-group">
+                    <label>Machine Type</label>
+                    <div class="machine-options">
+                        <label class="radio-card">
+                            <input type="radio" name="machine" value="tractor" checked>
+                            <span class="card-content">
+                                <i class="ri-tractor-fill"></i>
+                                Tractor
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="machine" value="harvester">
+                            <span class="card-content">
+                                <i class="ri-truck-line"></i>
+                                Harvester
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Farm Size (Acres)</label>
+                        <input type="number" min="1" placeholder="e.g. 5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Booking Type</label>
+                        <select required>
+                            <option value="single">Single Booking</option>
+                            <option value="group">Group Booking (Discounted)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Village Location</label>
+                    <div class="location-input">
+                        <i class="ri-map-pin-line"></i>
+                        <input type="text" placeholder="Enter village name..." required>
+                        <button type="button" class="btn-location" id="gps-btn"><i class="ri-focus-3-line"></i></button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Weather Alert Popup -->
+    <div class="weather-alert" id="weather-alert">
+        <div class="weather-icon">
+            <i class="ri-heavy-showers-line"></i>
+        </div>
+        <div class="weather-info">
+            <h4>Weather Alert: Rain Expected</h4>
+            <p>Heavy rain forecasted in 48 hours. Book a harvester now to prevent crop loss.</p>
+        </div>
+        <button class="close-weather" id="close-weather"><i class="ri-close-line"></i></button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+
+</html>
