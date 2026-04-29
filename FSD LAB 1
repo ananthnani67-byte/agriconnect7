@@ -1,0 +1,88 @@
+
+1. Install Dependencies in VS Code terminal (Command Prompt (Default)),
+//Verify node.js and npm version
+> node –v
+> npm –v
+>npx create-react-app weather-app
+>cd weather-app
+>npm install axios chart.js react-chartjs-2
+2. Create Weather Service (weatherService.js) in src/services/
+import axios from 'axios';
+const API_KEY = " 0ebdcd12e831cdd6493bbe5acc65c5e1"; //YOUR_API_KEY
+const BASE_URL = "https://api.openweathermap.org/data/2.5";
+export const getCurrentWeather = async (city) => {
+ const response = await 
+axios.get(`${BASE_URL}/weather?q=${city}&appid=${API_KEY}&units=metric`);
+ return response.data;
+};
+export const getHistoricalWeather = async (lat, lon, timestamp) => {
+const response = await 
+axios.get(`${BASE_URL}/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${timestam
+p}&appid=${API_KEY}&units=metric`);
+ return response.data;
+};
+3. Create Weather Chart Component (WeatherChart.js) in the folder src/components/
+import React from 'react';
+import { Line } from 'react-chartjs-2';
+function WeatherChart({ data }) {
+ const chartData = {
+ labels: data.map(item => new Date(item.dt * 1000).toLocaleTimeString()),
+ datasets: [
+ {
+ label: 'Temperature (°C)',
+ data: data.map(item => item.temp),
+ borderColor: 'blue',
+ fill: false,
+ }
+ ]
+ };
+ return <Line data={chartData} />;
+}
+export default WeatherChart;
+4. Create Weather Display Component (WeatherDisplay.js) in folder src/components/
+import React from 'react';
+function WeatherDisplay({ weather }) {
+ return (
+ <div>
+ <h2>Current Weather in {weather.name}</h2>
+ <p>Temperature: {weather.main.temp} °C</p>
+ <p>Humidity: {weather.main.humidity}%</p>
+ <p>Condition: {weather.weather[0].description}</p>
+ </div>
+ );
+}
+export default WeatherDisplay;
+5. Open App.js file in the /src folder, Replace the following code.
+import React, { useState, useEffect } from 'react';
+import { getCurrentWeather, getHistoricalWeather } from './services/weatherService';
+import WeatherDisplay from './components/WeatherDisplay';
+import WeatherChart from './components/WeatherChart';
+function App() {
+ const [currentWeather, setCurrentWeather] = useState(null);
+ const [historicalData, setHistoricalData] = useState([]);
+ useEffect(() => {
+ const fetchWeather = async () => {
+ const city = "Hyderabad"; // you can change or make it dynamic
+ const current = await getCurrentWeather(city);
+ setCurrentWeather(current);
+ // Fetch last 5 hours historical data
+ const { coord } = current;
+ const now = Math.floor(Date.now() / 1000);
+ let history = [];
+ for (let i = 1; i <= 5; i++) {
+ const past = await getHistoricalWeather(coord.lat, coord.lon, now - i * 3600);
+ history.push({ dt: past.current.dt, temp: past.current.temp });
+ }
+ setHistoricalData(history);
+ };
+ fetchWeather();
+ }, []);
+ return (
+ <div>
+ <h1>Weather App</h1>
+ {currentWeather && <WeatherDisplay weather={currentWeather} />}
+ {historicalData.length > 0 && <WeatherChart data={historicalData} />}
+ </div>
+ );
+}
+export default App;
