@@ -1,0 +1,43 @@
+
+#include <stdio.h>
+int main()
+{
+int i, j;
+int arr[100];
+int pt[20];
+int val, pgno, offset;
+int phymem, fs, nf;
+
+printf("\nMemory Management Using Paging\n");
+
+printf("\nEnter the size of physical memory: ");
+scanf("%d", &phymem);
+
+/* Initialize physical memory */
+for (i = 20, j = 0; j < phymem; i++, j++)
+    arr[i] = j;
+
+printf("\nEnter size of frame (page size): ");
+scanf("%d", &fs);
+
+nf = phymem / fs;
+printf("\nNumber of frames available = %d\n", nf);
+
+printf("\nEnter the page table:\n");
+for (i = 0; i < nf; i++)
+{
+    scanf("%d", &pt[i]);
+}
+
+printf("\nEnter the page number: ");
+scanf("%d", &pgno);
+
+printf("Enter the offset: ");
+scanf("%d", &offset);
+
+val = (fs * pt[pgno]) + offset;
+
+printf("\nThe physical address is: %d\n", arr[val]);
+
+return 0;
+}
