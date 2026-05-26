@@ -1,0 +1,138 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+/* Structure for segment table */
+struct list
+{
+    int seg;
+    int base;
+    int limit;
+    struct list *next;
+};
+
+struct list *p = NULL;
+
+/* Insert segment into segment table */
+void insert(int seg, int base, int limit)
+{
+    struct list *temp, *q;
+
+    temp = (struct list *)malloc(sizeof(struct list));
+
+    temp->seg = seg;
+    temp->base = base;
+    temp->limit = limit;
+    temp->next = NULL;
+
+    if (p == NULL)
+    {
+        p = temp;
+    }
+    else
+    {
+        q = p;
+
+        while (q->next != NULL)
+        {
+            q = q->next;
+        }
+
+        q->next = temp;
+    }
+}
+
+/* Find limit of a segment */
+int find_limit(int seg)
+{
+    struct list *q = p;
+
+    while (q != NULL)
+    {
+        if (q->seg == seg)
+        {
+            return q->limit;
+        }
+
+        q = q->next;
+    }
+
+    return -1;
+}
+
+/* Find base of a segment */
+int find_base(int seg)
+{
+    struct list *q = p;
+
+    while (q != NULL)
+    {
+        if (q->seg == seg)
+        {
+            return q->base;
+        }
+
+        q = q->next;
+    }
+
+    return -1;
+}
+
+int main()
+{
+    int seg, offset, limit, base;
+    int physical, c, s;
+
+    clrscr();
+
+    printf("\nMemory Management Using Segmentation\n");
+    printf("Enter -1 as segment number to stop\n");
+
+    /* Read segment table */
+    while (1)
+    {
+        printf("\nEnter segment number: ");
+        scanf("%d", &seg);
+
+        if (seg == -1)
+        {
+            break;
+        }
+
+        printf("Enter base value: ");
+        scanf("%d", &base);
+
+        printf("Enter limit value: ");
+        scanf("%d", &limit);
+
+        insert(seg, base, limit);
+    }
+
+    printf("\nEnter segment number for address translation: ");
+    scanf("%d", &seg);
+
+    printf("Enter offset: ");
+    scanf("%d", &offset);
+
+    c = find_limit(seg);
+    s = find_base(seg);
+
+    if (c == -1 || s == -1)
+    {
+        printf("\nInvalid segment number\n");
+    }
+    else if (offset < c)
+    {
+        physical = s + offset;
+
+        printf("\nPhysical Address = %d\n", physical);
+    }
+    else
+    {
+        printf("\nError: Offset exceeds segment limit\n");
+    }
+
+    getch();
+
+    return 0;
+}
