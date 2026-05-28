@@ -1,0 +1,89 @@
+// server.js
+
+const http = require('http');
+const os = require('os');
+const path = require('path');
+const EventEmitter = require('events');
+
+// Create Event Emitter
+const emitter = new EventEmitter();
+
+// Custom Event
+emitter.on('serverStart', () => {
+    console.log('Custom Event: Server has started!');
+});
+
+// Create Server
+const server = http.createServer((req, res) => {
+
+    // Route: /info
+    if (req.url === '/info') {
+
+        res.writeHead(200, {
+            'Content-Type': 'application/json'
+        });
+
+        res.end(JSON.stringify({
+            os: os.type(),
+            platform: os.platform(),
+            arch: os.arch(),
+            memory: {
+                free: os.freemem(),
+                total: os.totalmem()
+            }
+        }));
+
+    }
+
+    // Route: /path
+    else if (req.url === '/path') {
+
+        const filePath = path.join(
+            '/users',
+            'saravan',
+            'project',
+            'server.js'
+        );
+
+        res.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+
+        res.end(`File Path: ${filePath}`);
+
+    }
+
+    // Default Route
+    else {
+
+        res.writeHead(200, {
+            'Content-Type': 'text/html'
+        });
+
+        res.end(`
+            <h1>Welcome to Custom Node.js Server!</h1>
+
+            <p>Try these endpoints:</p>
+
+            <ul>
+                <li>
+                    <a href="/info">/info</a>
+                    → System info (OS, Memory)
+                </li>
+
+                <li>
+                    <a href="/path">/path</a>
+                    → Path details
+                </li>
+            </ul>
+        `);
+    }
+});
+
+// Start Server
+server.listen(3000, () => {
+
+    emitter.emit('serverStart');
+
+    console.log('Server running at http://localhost:3000/');
+});
