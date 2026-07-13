@@ -57,3 +57,16 @@ if (c < 'A') c = c + 26;
 }
 
 else if (Character.isLowerCase(c)) { c = c - (key % 26); if (c < 'a')
+c = c + 26;
+
+}
+
+decrypted += (char) c;
+
+}
+
+return decrypted;
+
+}
+
+}
