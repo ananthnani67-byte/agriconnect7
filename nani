@@ -1,27 +1,35 @@
-import java.io.*; import java.util.*;
-public class SubstitutionCipher {
-
-static Scanner sc = new Scanner(System.in);
-
-static BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); public static void main(String[] args) throws IOException {
-String a = "abcdefghijklmnopqrstuvwxyz"; String b = "zyxwvutsrqponmlkjihgfedcba";
-
-System.out.print("Enter any string: "); String str = br.readLine();
-String decrypt = ""; char c;
-for(int i=0;i<str.length();i++)
-
-{
-
-c = str.charAt(i);
-
-int j = a.indexOf(c);
-
-decrypt = decrypt+b.charAt(j);
+import 'package:flutter/material.dart';
+void main()
+{ runApp(MyApp());
 }
-
-System.out.println("The encrypted data is: " +decrypt);
-
+class MyApp extends StatelessWidget
+{ @override
+Widget build(BuildContext context)
+{ return MaterialApp(
+home: FirstScreen(), );
 }
-
 }
-
+class FirstScreen extends StatelessWidget
+{ @override
+Widget build(BuildContext context)
+{ return Scaffold(
+appBar: AppBar(title: Text('First Screen')), body: Center(
+child:
+ElevatedButton( onP
+ressed: ()
+{ Navigator.push(
+context, MaterialPageRoute(builder: (context) => SecondScreen()), );
+},child: Text('Go to Second Screen'), ), ), );
+}
+}
+class SecondScreen extends StatelessWidget
+{ @override
+Widget build(BuildContext context)
+{ return Scaffold(
+appBar: AppBar(title: Text('This is Second Screen')), body: Center(
+child:
+ElevatedButton( onPressed:
+() { Navigator.pop(context);
+},child: Text('Go Back'), ), ), );
+}
+}
