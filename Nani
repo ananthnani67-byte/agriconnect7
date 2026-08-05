@@ -1,26 +1,26 @@
-import 'package:flutter/material.dart';
-
-void main() { runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget { @override
-Widget build(BuildContext context) { return MaterialApp(
-home: Scaffold(
-appBar: AppBar(title: Text('Custom Widget is here')), body: Center(
-child: CustomButton(text: 'Click Me', onPressed: () { print('I am pressed');
-}),
-),
-),
-);
-}
-}
-
-class CustomButton extends StatelessWidget { final String text;
-final VoidCallback onPressed;
-CustomButton({required this.text, required this.onPressed}); @override
-Widget build(BuildContext context) { return ElevatedButton(
-onPressed: onPressed,
-child: Text(text, style: TextStyle(fontSize: 18)),
-);
-}
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Social Media Post</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="post-card">
+    <div class="post-header">
+      <img src="profile.jpg" class="avatar">
+      <div class="user-info">
+        <p class="username">John_Doe</p>
+        <p class="time">2 hrs ago</p>
+      </div>
+    </div>
+    <img src="post.jpg" class="post-image">
+    <div class="post-actions">
+      <span>&#10084; Like</span>
+      <span>&#128172; Comment</span>
+      <span>&#8635; Share</span>
+    </div>
+    <p class="caption"><b>John_Doe</b> Enjoying a beautiful sunset! #nature</p>
+  </div>
+</body>
+</html>
