@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Social Media Post</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="post-card">
+    <div class="post-header">
+      <img src="profile.jpg" class="avatar">
+      <div class="user-info">
+        <p class="username">John_Doe</p>
+        <p class="time">2 hrs ago</p>
+      </div>
+    </div>
+    <img src="post.jpg" class="post-image">
+    <div class="post-actions">
+      <span>&#10084; Like</span>
+      <span>&#128172; Comment</span>
+      <span>&#8635; Share</span>
+    </div>
+    <p class="caption"><b>John_Doe</b> Enjoying a beautiful sunset! #nature</p>
+  </div>
+</body>
+</html>
