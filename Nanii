@@ -1,12 +1,10 @@
 import javax.swing.*;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
-
 public class Blowfish {
-
-    static byte[] key;
-
-    public static void generateKey() throws Exception {
+static byte[] key;
+public static void generateKey() 
+throws Exception {
         KeyGenerator kg = KeyGenerator.getInstance("Blowfish");
         kg.init(128);
         SecretKey sk = kg.generateKey();
