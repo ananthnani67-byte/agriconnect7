@@ -1,0 +1,41 @@
+
+import javax.swing.*;
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.SecureRandom;
+
+class Blowfish {
+    static byte[] raw;
+
+    public static void main(String args[]) {
+        try {
+            KeyGenerator kg = KeyGenerator.getInstance("Blowfish");
+            kg.init(128);
+            SecretKey key = kg.generateKey();
+            raw = key.getEncoded();
+
+            String msg = JOptionPane.showInputDialog("Enter message");
+
+            Cipher c = Cipher.getInstance("Blowfish");
+            SecretKeySpec sk = new SecretKeySpec(raw, "Blowfish");
+
+            c.init(Cipher.ENCRYPT_MODE, sk);
+            byte[] enc = c.doFinal(msg.getBytes());
+
+            String encrypted = java.util.Base64.getEncoder()
+                    .encodeToString(enc);
+            JOptionPane.showMessageDialog(null,
+                    "Encrypted: " + encrypted);
+
+            c.init(Cipher.DECRYPT_MODE, sk);
+            byte[] dec = c.doFinal(enc);
+
+            String decrypted = new String(dec);
+            JOptionPane.showMessageDialog(null,
+                    "Decrypted: " + decrypted);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
