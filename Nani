@@ -1,77 +1,152 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-import java.lang.*;
+import 'package:flutter/material.dart';
 
-public class CeaserCipher {
+void main() {
+  runApp(MyApp());
+}
 
-    static Scanner sc = new Scanner(System.in);
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Form Validation',
+      debugShowCheckedModeBanner: false,
+      home: FormScreen(),
+    );
+  }
+}
 
-    static BufferedReader br = new BufferedReader(
-            new InputStreamReader(System.in));
+class FormScreen extends StatefulWidget {
+  @override
+  _FormScreenState createState() => _FormScreenState();
+}
 
-    public static void main(String[] args) throws IOException {
-        // TODO code application logic here
-        System.out.print("Enter any String: ");
-        String str = br.readLine();
+class _FormScreenState extends State<FormScreen> {
+  final _formKey = GlobalKey<FormState>();
 
-        System.out.print("\nEnter the Key: ");
-        int key = sc.nextInt();
+  final TextEditingController _nameController =
+      TextEditingController();
 
-        String encrypted = encrypt(str, key);
-        System.out.println("\nEncrypted String is: " + encrypted);
+  final TextEditingController _emailController =
+      TextEditingController();
 
-        String decrypted = decrypt(encrypted, key);
-        System.out.println("\nDecrypted String is: " + decrypted);
-        System.out.println("\n");
+  final TextEditingController _passwordController =
+      TextEditingController();
+
+  // Email validation
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
     }
 
-    public static String encrypt(String str, int key) {
-        String encrypted = "";
+    final emailRegex = RegExp(
+      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+    );
 
-        for (int i = 0; i < str.length(); i++) {
-            int c = str.charAt(i);
-
-            if (Character.isUpperCase(c)) {
-                c = c + (key % 26);
-
-                if (c > 'Z')
-                    c = c - 26;
-            } else if (Character.isLowerCase(c)) {
-                c = c + (key % 26);
-
-                if (c > 'z')
-                    c = c - 26;
-            }
-
-            encrypted += (char) c;
-        }
-
-        return encrypted;
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email';
     }
 
-    public static String decrypt(String str, int key) {
-        String decrypted = "";
+    return null;
+  }
 
-        for (int i = 0; i < str.length(); i++) {
-            int c = str.charAt(i);
+  // Dispose controllers
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
 
-            if (Character.isUpperCase(c)) {
-                c = c - (key % 26);
+    super.dispose();
+  }
 
-                if (c < 'A')
-                    c = c + 26;
-            } else if (Character.isLowerCase(c)) {
-                c = c - (key % 26);
-
-                if (c < 'a')
-                    c = c + 26;
-            }
-
-            decrypted += (char) c;
-        }
-
-        return decrypted;
+  // Submit form
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Form Submitted Successfully!'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fix the errors in red'),
+        ),
+      );
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Form Validation Example'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            autovalidateMode:
+                AutovalidateMode.onUserInteraction,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Name Field
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    labelText: 'Name',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your name';
+                    }
+                    return null;
+                  },
+                ),
+
+                // Email Field
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                  ),
+                  validator: _validateEmail,
+                ),
+
+                // Password Field
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
+
+                    return null;
+                  },
+                ),
+
+                SizedBox(height: 20),
+
+                // Submit Button
+                ElevatedButton(
+                  onPressed: _submitForm,
+                  child: Text('Submit'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
