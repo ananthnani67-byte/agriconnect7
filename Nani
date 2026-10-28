@@ -32,7 +32,7 @@ class _FormScreenState extends State<FormScreen> {
   final TextEditingController _passwordController =
       TextEditingController();
 
-  // Email validation
+  // Email validation using regex
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
@@ -49,17 +49,15 @@ class _FormScreenState extends State<FormScreen> {
     return null;
   }
 
-  // Dispose controllers
+  // Dispose controllers when not in use
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-
     super.dispose();
   }
 
-  // Submit form
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -118,19 +116,16 @@ class _FormScreenState extends State<FormScreen> {
                 // Password Field
                 TextFormField(
                   controller: _passwordController,
-                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
                   ),
+                  obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
-                    }
-
-                    if (value.length < 6) {
+                    } else if (value.length < 6) {
                       return 'Password must be at least 6 characters';
                     }
-
                     return null;
                   },
                 ),
